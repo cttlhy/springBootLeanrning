@@ -28,6 +28,7 @@ public class MappingResourceConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(firstInterceptor);
+		System.out.println("--------");
 		super.addInterceptors(registry);
 	}
 

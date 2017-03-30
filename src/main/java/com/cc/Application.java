@@ -50,7 +50,7 @@ public class Application {
         /// 设置总上传数据总大小
         factory.setMaxRequestSize("256KB"); 
         //Sets the directory location wherefiles will be stored.
-        factory.setLocation("d:/imgFile");
+       // factory.setLocation("d:/imgFile");
         return factory.createMultipartConfig(); 
 
     } 
