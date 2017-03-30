@@ -22,7 +22,6 @@ public class MappingResourceConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private FirstInterceptor firstInterceptor;
-
 	/**
 	 * 添加拦截器
 	 */
