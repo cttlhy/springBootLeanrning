@@ -9,9 +9,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post" encType="multipart/form-data" action="cc/sys/core/controller/fileUploadController/upload">
-		<p>浏览<input name="file" type="file"/></p>${url }
+ 	<h1>springMVC字节流输入上传文件</h1>   
+	<form name="form1" method="post" encType="multipart/form-data" action="cc/sys/core/controller/fileUploadController/upload">
+		<p>浏览<input name="file" type="file"/></p>
 		<p><input type="submit" value="上传"></p>
 	</form>
+	<br>  
+    <br>  
+    <hr align="left" width="60%" color="#FF0000" size="3">  
+    <br>  
+    <br>  
+     <h1>springMVC包装类上传文件</h1>
+     <form name="form2" method="post" encType="multipart/form-data" action="cc/sys/core/controller/fileUploadController/upload2">
+		<p>浏览<input name="file" type="file"/></p>
+		<p><input type="submit" value="上传"></p>
+	</form>   
 </body>
 </html>
