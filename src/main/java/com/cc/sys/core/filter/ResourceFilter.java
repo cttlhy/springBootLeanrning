@@ -18,7 +18,7 @@ import org.springframework.core.annotation.Order;
  * 对所有的请求进行过滤
  * @author chenchao
  */
-@WebFilter(filterName="ResourceFilter",urlPatterns= {""})
+@WebFilter(filterName="ResourceFilter",urlPatterns= {"/*"})
 @Order(value=1)
 public class ResourceFilter implements Filter {
 
