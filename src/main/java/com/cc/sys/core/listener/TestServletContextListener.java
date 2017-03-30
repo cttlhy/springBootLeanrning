@@ -4,17 +4,20 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @WebListener
 public class TestServletContextListener implements ServletContextListener  {
-
+	private static final Logger logger = LoggerFactory.getLogger(TestServletContextListener.class);
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		System.out.println("ServletContex初始化");
+		logger.info("ServletContex初始化");
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		System.out.println("ServletContex销毁");
+		logger.info("ServletContex销毁");
 	}
 
 }
