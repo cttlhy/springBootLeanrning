@@ -17,22 +17,12 @@
 		<version>1.5.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://183.3.132.146:18081/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
+
+	<!-- <repositories> <repository> <id>nexus</id> <name>Team Nexus Repository</name> 
+		<url>http://183.3.132.146:18081/nexus/content/groups/public</url> <releases> 
+		<enabled>true</enabled> <updatePolicy>always</updatePolicy> </releases> <snapshots> 
+		<enabled>true</enabled> <updatePolicy>always</updatePolicy> </snapshots> 
+		</repository> </repositories> -->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -103,8 +93,25 @@
 			<artifactId>pagehelper</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-		
 
+		<!-- mybatis -->
+		<dependency>
+			<groupId>tk.mybatis</groupId>
+			<artifactId>mapper</artifactId>
+			<version>3.3.4</version>
+		</dependency>
+
+		<!-- 
+			数据源
+			HikariCP 的JDBC连接池组件，据说其性能比常用的 c3p0、tomcat、bone、vibur 这些要高很多
+		 -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<!-- 版本号可以不用指定，Spring Boot会选用合适的版本 -->
+		</dependency>
+
+	
 	</dependencies>
 
 	<build>
