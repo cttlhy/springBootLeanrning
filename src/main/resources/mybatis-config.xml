@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<typeAliases>
+	<!-- <typeAliases>
 		<package name="com.cc.sys.core.dto"/>
-	</typeAliases>
-	<mappers>
+	</typeAliases> -->
+	<!-- <mappers>
 		<mapper resource="com/cc/sys/core/mapper/UserMapper.xml"/>
-	</mappers>
+	</mappers> -->
 </configuration>
