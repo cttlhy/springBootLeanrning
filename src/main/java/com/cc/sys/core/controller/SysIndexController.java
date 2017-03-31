@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.service.UserService;
 
 /**
@@ -23,6 +24,10 @@ import com.cc.sys.core.service.UserService;
 @RequestMapping(path="cc/sys/core/controller/sysIndexController")
 public class SysIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(SysIndexController.class);
+	
+	
+	@Resource
+	private UserService userService;
 	
 	@RequestMapping(path="index",method=RequestMethod.GET)
 	public ModelAndView gotoIndexPage(HttpServletRequest request, HttpServletResponse reponse){
@@ -37,6 +42,15 @@ public class SysIndexController {
 	public String sayHello(HttpServletRequest request, HttpServletResponse reponse){
 		logger.debug("Hello");
 		return "Hello";
+	}
+	
+	
+	@RequestMapping(path="operation/testMybatis",method=RequestMethod.GET)
+	@ResponseBody
+	public SysUser testMybatis(HttpServletRequest request, HttpServletResponse reponse){
+		logger.debug("testMybatis");
+		SysUser user = userService.selectUserById("1");
+		return user;
 	}
 	
 }
