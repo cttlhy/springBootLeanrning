@@ -1,4 +1,4 @@
-package com.cc.sys.core.bootConfig;
+package com.cc.sys.core.bootConfig.globalCF;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

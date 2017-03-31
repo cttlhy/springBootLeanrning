@@ -1,4 +1,4 @@
-package com.cc.sys.core.bootConfig;
+package com.cc.sys.core.bootConfig.globalCF;
 
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
