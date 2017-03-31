@@ -11,19 +11,22 @@
 	function sayHello(){
 		window.open("${url }hello");
 	}
-	
 	function mybatis(){
 		window.open("${url }testMybatis");
+	}
+	function mybatisPage(){
+		window.open("${url }testPageHelper");
 	}
 </script>
 </head>
 <body>
 	<h1>欢迎你访问CCSYS 系统，欢迎您的到来!</h1>
-	<h3>从后台接收到的地址是:</h3>${url }
+	<h3>从后台接收到的地址是:</h3><%-- ${url } --%>
 	<a href="javascript:void(0);" onclick="sayHello();">打招呼</a>
 	
 	
 	<hr>
 	测试mybatis<a href="javascript:void(0)" onclick="mybatis();" >测试mybatis</a>
+	测试mybatis分页<a href="javascript:void(0)" onclick="mybatisPage();" >测试mybatis分页</a>
 </body>
 </html>

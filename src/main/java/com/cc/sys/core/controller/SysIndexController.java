@@ -1,5 +1,7 @@
 package com.cc.sys.core.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +53,14 @@ public class SysIndexController {
 		logger.debug("testMybatis");
 		SysUser user = userService.selectUserById("1");
 		return user;
+	}
+	
+	@RequestMapping(path="operation/testPageHelper",method=RequestMethod.GET)
+	@ResponseBody
+	public List<SysUser> testPageHelper(HttpServletRequest request, HttpServletResponse reponse){
+		logger.debug("testPageHelper");
+		List<SysUser> users = userService.listUsers();
+		return users;
 	}
 	
 }

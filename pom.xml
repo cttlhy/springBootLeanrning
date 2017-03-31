@@ -101,17 +101,19 @@
 			<version>3.3.4</version>
 		</dependency>
 
-		<!-- 
-			数据源
-			HikariCP 的JDBC连接池组件，据说其性能比常用的 c3p0、tomcat、bone、vibur 这些要高很多
-		 -->
+		<!-- 数据源 HikariCP 的JDBC连接池组件，据说其性能比常用的 c3p0、tomcat、bone、vibur 这些要高很多 -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<!-- 版本号可以不用指定，Spring Boot会选用合适的版本 -->
 		</dependency>
 
-	
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

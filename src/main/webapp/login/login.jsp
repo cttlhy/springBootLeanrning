@@ -11,12 +11,13 @@
 <script type="text/javascript" src="login/js/index.js"></script>
 <script type="text/javascript">
 	function toIndexPage(){
-		window.open("cc/sys/core/controller/sysIndexController/index");
+		window.location.href="cc/sys/core/controller/sysIndexController/index";
 	}
 </script>
 </head>
 <body >
 	<h1>首页面!Index.jsp</h1>
 	<a href="javascript:void(0);" onclick="toIndexPage();" >进入首页__IndexPage</a>
+	<a href="cc/sys/core/controller/sysIndexController/index" >进入首页__IndexPage2</a>
 </body>
 </html>
