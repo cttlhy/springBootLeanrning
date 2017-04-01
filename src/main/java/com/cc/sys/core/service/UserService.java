@@ -22,7 +22,7 @@ public class UserService {
 	
 	
 	public List<SysUser> listUsers(){
-		Page<SysUser> users = PageHelper.startPage(2,5);
+		Page<SysUser> users = PageHelper.startPage(1,3);
 		users.addAll(userDao.listUsers());
 		return users;
 	}

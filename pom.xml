@@ -6,7 +6,7 @@
 	<groupId>com.cc</groupId>
 	<artifactId>boot1.5.2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>boot1.5.2</name>
 	<description>Demo project for Spring Boot</description>
@@ -29,7 +29,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
-
+	
 	<dependencies>
 		<!-- springboot 对web项目的支撑 -->
 		<dependency>
@@ -48,7 +48,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -94,7 +94,7 @@
 			<version>4.1.0</version>
 		</dependency>
 
-		<!-- mybatis -->
+		<!-- mybatis 插件 -->
 		<dependency>
 			<groupId>tk.mybatis</groupId>
 			<artifactId>mapper</artifactId>
@@ -115,8 +115,8 @@
 		</dependency>
 
 	</dependencies>
-
 	<build>
+		<finalName>boot</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -124,6 +124,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 
 
 </project>
