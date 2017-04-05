@@ -53,6 +53,7 @@ public class UserService {
 				SysUser user = new SysUser();
 				user.setId(UUID.randomUUID().toString());
 				if(i==2){
+					//作者本机数据库为mysql,手动将address字段值设置为4各长度来测试事务回滚
 					user.setAddress("陕西1111111111111111111111");
 				}else{
 					user.setAddress("陕西");
