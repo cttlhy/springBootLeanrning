@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +62,22 @@ public class SysIndexController {
 		logger.debug("testPageHelper");
 		List<SysUser> users = userService.listUsers();
 		return users;
+	}
+	
+	@RequestMapping(path="operation/deleteById/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public int deleteById(@PathVariable String id,HttpServletRequest request, HttpServletResponse reponse) throws Exception{
+		logger.debug("deleteById");
+		int res = userService.deleteById(Integer.parseInt(id));
+		return res;
+	}
+	@RequestMapping(path="operation/insert",method=RequestMethod.GET)
+	@ResponseBody
+	public int insert(HttpServletRequest request, HttpServletResponse reponse) throws Exception {
+		logger.debug("insert");
+		int res =0;
+		res = userService.insert();
+		return res;
 	}
 	
 }
