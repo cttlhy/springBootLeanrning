@@ -9,4 +9,8 @@ public interface UserDao{
 	public SysUser selectUserById(String id);
 	
 	public Page<SysUser> listUsers();
+	
+	public int deleteById(int id);
+	
+	public int insertSysUser(SysUser user);
 }
