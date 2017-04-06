@@ -24,8 +24,10 @@
 		delete from sys_user where id =#{id}
 	</delete>
 
-	<insert id="insertSysUser" parameterType="com.cc.sys.core.dto.SysUser">
+	<insert id="insertSysUser" parameterType="com.cc.sys.core.dto.SysUser" >
 		insert into sys_user (id,address,email) values (#{id},#{address},#{email});
 	</insert>
+	
+	
 
 </mapper>
