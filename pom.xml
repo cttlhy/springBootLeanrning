@@ -108,6 +108,12 @@
 			<version>1.2.17</version>
 		</dependency>
 
+		<!-- springboot 对 redis 缓存的支持 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>boot</finalName>

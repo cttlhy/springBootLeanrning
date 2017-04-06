@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.service.UserService;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 目的：index.jsp页面所需要的跳转后台mapping映射
@@ -58,7 +59,14 @@ public class SysIndexController {
 	
 	@RequestMapping(path="operation/testPageHelper",method=RequestMethod.GET)
 	@ResponseBody
-	public List<SysUser> testPageHelper(HttpServletRequest request, HttpServletResponse reponse){
+	public PageInfo<SysUser> testPageHelper(HttpServletRequest request, HttpServletResponse reponse){
+		logger.debug("testPageHelper");
+		PageInfo<SysUser> users = userService.listUsers2();
+		return users;
+	}
+	@RequestMapping(path="operation/testNoPageHelper",method=RequestMethod.GET)
+	@ResponseBody
+	public List<SysUser> testNoPageHelper(HttpServletRequest request, HttpServletResponse reponse){
 		logger.debug("testPageHelper");
 		List<SysUser> users = userService.listUsers();
 		return users;

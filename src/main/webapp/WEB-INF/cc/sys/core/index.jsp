@@ -17,6 +17,9 @@
 	function mybatisPage(){
 		window.open("${url }testPageHelper");
 	}
+	function testNoPageHelper(){
+		window.open("${url }testNoPageHelper");
+	}
 	function insertBatch(){
 		window.open("${url }insert");
 	}
@@ -30,6 +33,8 @@
 	测试mybatis<a href="javascript:void(0)" onclick="mybatis();" >测试mybatis</a>
 	<br>
 	测试mybatis分页<a href="javascript:void(0)" onclick="mybatisPage();" >测试mybatis分页</a>
+	<br>
+	测试mybatis不分页<a href="javascript:void(0)" onclick="testNoPageHelper();" >测试mybatis不分页</a>
 	<br>
 	批量插入带测事务,该功能链接插入肯定失败(请查看后台源码),主要测试插入过长的字符是否会导致事务回滚<a href="javascript:void(0)" onclick="insertBatch();" >批量插入测试数据</a>
 	<br>

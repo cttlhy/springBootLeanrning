@@ -5,8 +5,10 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cc.sys.core.dao.UserDao;
@@ -14,59 +16,73 @@ import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.exception.DaoException;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
-@Service(value="UserService")
-@Transactional(propagation=Propagation.REQUIRED,value="UserService")
+@Service
+@Transactional
 public class UserService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Resource
 	private UserDao userDao;
-	
-	public SysUser selectUserById(String id){
+
+	public SysUser selectUserById(String id) {
 		return userDao.selectUserById(id);
 	}
-	
-	
-	public List<SysUser> listUsers(){
-		Page<SysUser> users = PageHelper.startPage(1,3);
-		users.addAll(userDao.listUsers());
+
+	@Cacheable(value = "listUsers",keyGenerator="wiselyKeyGenerator")
+	public List<SysUser> listUsers() {
+		//Page<SysUser> users = PageHelper.startPage(1, 3);
+		//users.addAll(userDao.listUsers());
+		List<SysUser> users = userDao.listUsers();
+		System.out.println("1111=============>查询数据库获取列表成功！");
 		return users;
 	}
-	
-	public int deleteById(int id)  throws Exception{
+	@Cacheable(value = "listUsers",keyGenerator="wiselyKeyGenerator")
+	public PageInfo<SysUser> listUsers2() {
+		PageHelper.startPage(1000, 10);
+		Page<SysUser> listUsers = userDao.listUsers();
+		System.out.println(listUsers.size());
+		PageInfo<SysUser> pinfo = new PageInfo<SysUser>(listUsers);
+		System.out.println("22222=============>查询数据库获取列表成功！");
+		return pinfo;
+	}
+
+	public int deleteById(int id) throws Exception {
 		try {
 			int res = userDao.deleteById(id);
 			System.out.println("删除成功！");
-			if(res>0){
+			if (res > 0) {
 				throw new DaoException("数据删除异常，将要回滚！");
 			}
 			return res;
 		} catch (DaoException e) {
-			throw new DaoException(e.getMessage(),e);
+			throw new DaoException(e.getMessage(), e);
 		}
-		
+
 	}
-	
-	public int insert()  throws Exception{
+
+	public int insert() throws Exception {
 		try {
 			int res = 0;
-			for(int i=0;i<5;i++){
+			for (int i = 0; i < 10000; i++) {
 				SysUser user = new SysUser();
 				user.setId(UUID.randomUUID().toString());
-				if(i==2){
-					//作者本机数据库为mysql,手动将address字段值设置为4各长度来测试事务回滚
-					user.setAddress("陕西1111111111111111111111");
-				}else{
-					user.setAddress("陕西");
-				}
+				user.setName("admin"+i);
+				user.setAddress("陕西");
 				user.setEmail("123@112.com");
 				userDao.insertSysUser(user);
+				logger.info("插入数据第["+(i+1)+"]条");
+				if(i>100){
+					//throw new DaoException("插入数据过多，回滚！");
+				}
 				res++;
 			}
 			return res;
 		} catch (Exception e) {
-			throw new DaoException(e.getMessage(),e);
+			throw new DaoException(e.getMessage(), e);
 		}
-		
+
 	}
 
 }

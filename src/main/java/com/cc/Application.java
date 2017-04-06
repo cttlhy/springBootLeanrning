@@ -1,6 +1,9 @@
 package com.cc;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Resource;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.MultipartConfigElement;
 import javax.sql.DataSource;
 
@@ -13,12 +16,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
@@ -29,41 +33,31 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 @EnableTransactionManagement
 // @EnableScheduling//启动定时任务
 // @Import(Dept.class)//用 import注解可以将非扫描包下的bean被spring管理
-public class Application extends SpringBootServletInitializer  {
+public class Application extends SpringBootServletInitializer implements TransactionManagementConfigurer  {
 
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
-
-	@Resource(name="tx11")
-	private PlatformTransactionManager tx11;
 	
-	@Bean(name = "tx11")
+	@Bean(name = "dataSourceTransactionManager")
 	public PlatformTransactionManager txManager(DataSource dataSource) {
-		logger.info("===============事务管理1加载完毕-->tx1:" + dataSource.getClass().getName());
 		return new DataSourceTransactionManager(dataSource);
 	}
-	/*
-	@Resource(name = "tx22")
-	private PlatformTransactionManager tx22;
-
 	
-
 	// 创建事务管理器2
-	@Bean(name = "tx22")
+	@Bean(name = "jpaTransactionManager")
 	public PlatformTransactionManager txManager2(EntityManagerFactory factory) {
-		logger.info("===============事务管理2加载完毕-->tx2:" + factory.getClass().getName());
 		return new JpaTransactionManager(factory); 
 	}
 
+	@Resource
+	private JpaTransactionManager jpaTransactionManager;
 	// 实现接口 TransactionManagementConfigurer 方法，其返回值代表在拥有多个事务管理器的情况下默认使用的事务管理器
 	@Override
 	public PlatformTransactionManager annotationDrivenTransactionManager() {
-		logger.info("tx11-->"+tx11.getClass().getName());
-		logger.info("tx22-->"+tx22.getClass().getName());
-		return tx11;
-	}*/
+		return jpaTransactionManager;
+	}
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext  ctx = SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 	/**
@@ -86,12 +80,13 @@ public class Application extends SpringBootServletInitializer  {
 	public HttpMessageConverters fastJsonHttpMessageConverters() {
 		FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 		FastJsonConfig fastJsonConfig = new FastJsonConfig();
-		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+		fastJsonConfig.setCharset(Charset.forName("GBK"));
+		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,SerializerFeature.WriteMapNullValue);
 		fastConverter.setFastJsonConfig(fastJsonConfig);
 		HttpMessageConverter<?> converter = fastConverter;
 		return new HttpMessageConverters(converter);
 	}
-
+ 
 	/**
 	 * 文件上传大小限制
 	 * 
@@ -109,5 +104,9 @@ public class Application extends SpringBootServletInitializer  {
 		return factory.createMultipartConfig();
 
 	}
+
+	
+	
+	
 
 }
