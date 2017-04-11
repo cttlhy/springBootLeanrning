@@ -13,7 +13,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import com.cc.sys.core.counst.SchedulConfig;
 
 @Configuration
-@EnableScheduling
+//@EnableScheduling
 public class SysAutoSchedul implements SchedulingConfigurer{
 	
 	

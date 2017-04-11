@@ -27,6 +27,12 @@
 	function removeAllCache(){
 		window.open("${url }removeAllCache");
 	}
+	function start_A_Task(){
+		window.open("${url }start_A_Task");
+	}
+	function stop_the_started_Task(){
+		window.open("${url }stop_the_started_Task");
+	}
 </script>
 </head>
 <body>
@@ -48,5 +54,8 @@
 		<input type="text" title="定时表达式" name="excutionTime" ><input type="submit" value="改变调度时间">表达式举例：0/10 * * * * * *   （秒 分 时 天 星期 月 年）
 	</form>
 	<br>
+	启动调度<a href="javascript:void(0)" onclick="start_A_Task();" >启动调度</a>
+	<br>
+	关闭调度<a href="javascript:void(0)" onclick="stop_the_started_Task();" >关闭调度</a>
 </body>
 </html>

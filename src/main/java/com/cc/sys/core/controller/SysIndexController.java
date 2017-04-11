@@ -1,7 +1,9 @@
 package com.cc.sys.core.controller;
 
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
-import org.springframework.scheduling.concurrent.ScheduledExecutorTask;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.Trigger;
+import org.springframework.scheduling.TriggerContext;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +44,12 @@ public class SysIndexController {
 
 	@Resource
 	private UserService userService;
+	
+	@Resource
+	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+	
+	private ScheduledFuture<?> schedule;//启动调度后的任务对象
+	
 
 	@RequestMapping(path = "index", method = RequestMethod.GET)
 	public ModelAndView gotoIndexPage(HttpServletRequest request, HttpServletResponse reponse) {
@@ -108,5 +122,34 @@ public class SysIndexController {
 		SchedulConfig.setExecutionTime(excutionTime);
 		return "更改成功.";
 	}
+	@RequestMapping(path = "operation/start_A_Task", method = RequestMethod.GET)
+	@ResponseBody
+	public String start_A_Task(){
+		System.out.println(threadPoolTaskScheduler.getPoolSize());
+		schedule = threadPoolTaskScheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("start_A_Task,启动成功：-->"+ new Date());
+			}
+		}, new Trigger() {
+			
+			@Override
+			public Date nextExecutionTime(TriggerContext triggerContext) {
+				CronTrigger cronTrigger = new CronTrigger(SchedulConfig.getExecutionTime());
+				return cronTrigger.nextExecutionTime(triggerContext);
+			}
+		});
+		return "启动任务成功！";
+	}
+	@RequestMapping(path = "operation/stop_the_started_Task", method = RequestMethod.GET)
+	@ResponseBody
+	public String stop_the_started_Task(){
+		if(schedule!=null){//如果存在调度执行，再关闭
+			schedule.cancel(true);
+		}
+		return "任务关闭";
+	}
+	
+	
 
 }

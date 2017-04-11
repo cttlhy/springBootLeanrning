@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
@@ -103,6 +104,16 @@ public class Application extends SpringBootServletInitializer implements Transac
 		// factory.setLocation("d:/imgFile");
 		return factory.createMultipartConfig();
 
+	}
+	
+	
+	/**
+	 * 动态启动停止调度任务所需要注入的类，为在后台的controller中自动注入所用
+	 * @return
+	 */
+	@Bean(name="threadPoolTaskScheduler")
+	public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
+		return  new ThreadPoolTaskScheduler();
 	}
 
 	
