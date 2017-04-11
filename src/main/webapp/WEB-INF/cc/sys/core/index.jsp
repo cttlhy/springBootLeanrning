@@ -23,6 +23,10 @@
 	function insertBatch(){
 		window.open("${url }insert");
 	}
+	
+	function removeAllCache(){
+		window.open("${url }removeAllCache");
+	}
 </script>
 </head>
 <body>
@@ -38,5 +42,6 @@
 	<br>
 	批量插入带测事务,该功能链接插入肯定失败(请查看后台源码),主要测试插入过长的字符是否会导致事务回滚<a href="javascript:void(0)" onclick="insertBatch();" >批量插入测试数据</a>
 	<br>
+	清空redis缓存<a href="javascript:void(0)" onclick="removeAllCache();" >清空redis缓存</a>
 </body>
 </html>

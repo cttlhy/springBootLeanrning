@@ -28,13 +28,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableCaching
 public class CacheConfig extends CachingConfigurerSupport {
 	private static final Logger logger = LoggerFactory.getLogger(CacheConfig.class);
+	
+	
 	@Value("${spring.redis.host}")
 	private String host;
 	@Value("${spring.redis.port}")
 	private int port;
 	@Value("${spring.redis.timeout}")
 	private int timeout;
-
+	
 	@Bean
 	public KeyGenerator wiselyKeyGenerator() {
 		return new KeyGenerator() {
@@ -52,6 +54,8 @@ public class CacheConfig extends CachingConfigurerSupport {
 			}
 		};
 	}
+	
+	
 
 	@Bean
 	public JedisConnectionFactory redisConnectionFactory() {
@@ -90,4 +94,6 @@ public class CacheConfig extends CachingConfigurerSupport {
 		template.setValueSerializer(jackson2JsonRedisSerializer);
 		logger.info("==============setSerializer()加载成功..");
 	}
+	
+	
 }

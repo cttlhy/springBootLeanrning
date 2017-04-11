@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +27,10 @@ public class UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Resource
 	private UserDao userDao;
-
+	
+	@Resource
+	private StringRedisTemplate redis; 
+	
 	public SysUser selectUserById(String id) {
 		return userDao.selectUserById(id);
 	}
@@ -36,11 +41,12 @@ public class UserService {
 		//users.addAll(userDao.listUsers());
 		List<SysUser> users = userDao.listUsers();
 		System.out.println("1111=============>查询数据库获取列表成功！");
+		
 		return users;
 	}
-	@Cacheable(value = "listUsers",keyGenerator="wiselyKeyGenerator")
+	@Cacheable(value = "listUsers1",keyGenerator="wiselyKeyGenerator")
 	public PageInfo<SysUser> listUsers2() {
-		PageHelper.startPage(1000, 10);
+		PageHelper.startPage(10, 10);
 		Page<SysUser> listUsers = userDao.listUsers();
 		System.out.println(listUsers.size());
 		PageInfo<SysUser> pinfo = new PageInfo<SysUser>(listUsers);
@@ -65,7 +71,7 @@ public class UserService {
 	public int insert() throws Exception {
 		try {
 			int res = 0;
-			for (int i = 0; i < 10000; i++) {
+			for (int i = 0; i < 1000; i++) {
 				SysUser user = new SysUser();
 				user.setId(UUID.randomUUID().toString());
 				user.setName("admin"+i);
@@ -83,6 +89,12 @@ public class UserService {
 			throw new DaoException(e.getMessage(), e);
 		}
 
+	}
+	
+	@CacheEvict(allEntries=true,value="*",key="*")
+	public String removeAllCache(){
+//		redis.delete("*");
+		return "删除完毕。";
 	}
 
 }

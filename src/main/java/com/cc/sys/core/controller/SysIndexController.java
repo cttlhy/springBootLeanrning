@@ -88,4 +88,12 @@ public class SysIndexController {
 		return res;
 	}
 	
+	@RequestMapping(path="operation/removeAllCache",method=RequestMethod.GET)
+	@ResponseBody
+	public String removeAllCache(HttpServletRequest request, HttpServletResponse reponse) throws Exception {
+		logger.debug("removeAllCache");
+		String msg = userService.removeAllCache();
+		return msg;
+	}
+	
 }
