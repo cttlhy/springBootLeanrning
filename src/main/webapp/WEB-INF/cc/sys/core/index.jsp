@@ -43,5 +43,10 @@
 	批量插入带测事务,该功能链接插入肯定失败(请查看后台源码),主要测试插入过长的字符是否会导致事务回滚<a href="javascript:void(0)" onclick="insertBatch();" >批量插入测试数据</a>
 	<br>
 	清空redis缓存<a href="javascript:void(0)" onclick="removeAllCache();" >清空redis缓存</a>
+	<br>
+	<form action="${url }changeExcutionTime" method="post"  >
+		<input type="text" title="定时表达式" name="excutionTime" ><input type="submit" value="改变调度时间">表达式举例：0/10 * * * * * *   （秒 分 时 天 星期 月 年）
+	</form>
+	<br>
 </body>
 </html>

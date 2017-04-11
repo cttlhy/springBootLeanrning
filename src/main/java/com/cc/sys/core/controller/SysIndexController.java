@@ -1,6 +1,7 @@
 package com.cc.sys.core.controller;
 
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -8,92 +9,104 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
+import org.springframework.scheduling.concurrent.ScheduledExecutorTask;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cc.sys.core.counst.SchedulConfig;
 import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.service.UserService;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 目的：index.jsp页面所需要的跳转后台mapping映射
- * 跳转系统首页
+ * 目的：index.jsp页面所需要的跳转后台mapping映射 跳转系统首页
+ * 
  * @author chenchao
  */
 @Controller
-@RequestMapping(path="cc/sys/core/controller/sysIndexController")
+@RequestMapping(path = "cc/sys/core/controller/sysIndexController")
 public class SysIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(SysIndexController.class);
-	
-	
+
 	@Resource
 	private UserService userService;
-	
-	@RequestMapping(path="index",method=RequestMethod.GET)
-	public ModelAndView gotoIndexPage(HttpServletRequest request, HttpServletResponse reponse){
+
+	@RequestMapping(path = "index", method = RequestMethod.GET)
+	public ModelAndView gotoIndexPage(HttpServletRequest request, HttpServletResponse reponse) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("cc/sys/core/index");
 		request.setAttribute("url", "cc/sys/core/controller/sysIndexController/operation/");
-		return mav; 
+		return mav;
 	}
-	
-	@RequestMapping(path="operation/hello",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/hello", method = RequestMethod.GET)
 	@ResponseBody
-	public String sayHello(HttpServletRequest request, HttpServletResponse reponse){
+	public String sayHello(HttpServletRequest request, HttpServletResponse reponse) {
 		logger.debug("Hello");
 		return "Hello";
 	}
-	
-	
-	@RequestMapping(path="operation/testMybatis",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/testMybatis", method = RequestMethod.GET)
 	@ResponseBody
-	public SysUser testMybatis(HttpServletRequest request, HttpServletResponse reponse){
+	public SysUser testMybatis(HttpServletRequest request, HttpServletResponse reponse) {
 		logger.debug("testMybatis");
 		SysUser user = userService.selectUserById("1");
 		return user;
 	}
-	
-	@RequestMapping(path="operation/testPageHelper",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/testPageHelper", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<SysUser> testPageHelper(HttpServletRequest request, HttpServletResponse reponse){
+	public PageInfo<SysUser> testPageHelper(HttpServletRequest request, HttpServletResponse reponse) {
 		logger.debug("testPageHelper");
 		PageInfo<SysUser> users = userService.listUsers2();
 		return users;
 	}
-	@RequestMapping(path="operation/testNoPageHelper",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/testNoPageHelper", method = RequestMethod.GET)
 	@ResponseBody
-	public List<SysUser> testNoPageHelper(HttpServletRequest request, HttpServletResponse reponse){
+	public List<SysUser> testNoPageHelper(HttpServletRequest request, HttpServletResponse reponse) {
 		logger.debug("testPageHelper");
 		List<SysUser> users = userService.listUsers();
 		return users;
 	}
-	
-	@RequestMapping(path="operation/deleteById/{id}",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/deleteById/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public int deleteById(@PathVariable String id,HttpServletRequest request, HttpServletResponse reponse) throws Exception{
+	public int deleteById(@PathVariable String id, HttpServletRequest request, HttpServletResponse reponse)
+			throws Exception {
 		logger.debug("deleteById");
 		int res = userService.deleteById(Integer.parseInt(id));
 		return res;
 	}
-	@RequestMapping(path="operation/insert",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/insert", method = RequestMethod.GET)
 	@ResponseBody
 	public int insert(HttpServletRequest request, HttpServletResponse reponse) throws Exception {
 		logger.debug("insert");
-		int res =0;
+		int res = 0;
 		res = userService.insert();
 		return res;
 	}
-	
-	@RequestMapping(path="operation/removeAllCache",method=RequestMethod.GET)
+
+	@RequestMapping(path = "operation/removeAllCache", method = RequestMethod.GET)
 	@ResponseBody
 	public String removeAllCache(HttpServletRequest request, HttpServletResponse reponse) throws Exception {
 		logger.debug("removeAllCache");
 		String msg = userService.removeAllCache();
 		return msg;
 	}
-	
+
+	@RequestMapping(path = "operation/changeExcutionTime", method = RequestMethod.POST)
+	@ResponseBody
+	public String changeExcutionTime(@RequestParam String excutionTime) {
+		SchedulConfig.setExecutionTime(excutionTime);
+		return "更改成功.";
+	}
+
 }

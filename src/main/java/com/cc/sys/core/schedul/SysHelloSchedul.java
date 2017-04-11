@@ -22,7 +22,7 @@ public class SysHelloSchedul {
 	 * @Scheduled(cron="0 0/1 8-20 * * ?") 每天早八点到晚八点，间隔1分钟执行任务
 	 */
 
-	@Scheduled(cron = "0/5 * * * * ?") // 每5秒执行一次
+	//@Scheduled(cron = "0/5 * * * * ?") // 每5秒执行一次
 	public void sayHelloForU() {
 		Thread current = Thread.currentThread();
 		logger.info("线程调度类!【com.cc.sys.core.schedul.SysHelloSchedul】 线程ID["+ current.getId()+"]向您问好！");
