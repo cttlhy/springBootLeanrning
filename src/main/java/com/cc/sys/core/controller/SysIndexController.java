@@ -172,7 +172,7 @@ public class SysIndexController {
 			message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setFrom(emailFormUser);
-			helper.setTo("402932837@qq.com");
+			helper.setTo(sendTo);
 			message.setSubject("标题：来子springboot1.52的测试发送");
 			helper.setText("<a href='http://www.baidu.com'>百度链接</a>",true);
 		} catch (MessagingException e) {
