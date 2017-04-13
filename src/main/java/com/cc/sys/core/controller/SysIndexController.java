@@ -2,22 +2,26 @@ package com.cc.sys.core.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.annotation.Resource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.TaskScheduler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +53,12 @@ public class SysIndexController {
 	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 	
 	private ScheduledFuture<?> schedule;//启动调度后的任务对象
+	
+	@Autowired
+    private JavaMailSender javaMailSender;
+	
+	@Value("${spring.mail.username}")
+	private String emailFormUser;
 	
 
 	@RequestMapping(path = "index", method = RequestMethod.GET)
@@ -148,6 +158,28 @@ public class SysIndexController {
 			schedule.cancel(true);
 		}
 		return "任务关闭";
+	}
+	
+	
+	
+	@Value("${spring.mail.sendTo}")
+	private String sendTo;
+	@RequestMapping(path = "operation/sendEmail", method = RequestMethod.GET)
+	@ResponseBody
+	public String sendEmail(){
+		MimeMessage message = null;
+		try {
+			message = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setFrom(emailFormUser);
+			helper.setTo("402932837@qq.com");
+			message.setSubject("标题：来子springboot1.52的测试发送");
+			helper.setText("<a href='http://www.baidu.com'>百度链接</a>",true);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+        javaMailSender.send(message);
+		return "send Success!";
 	}
 	
 	
