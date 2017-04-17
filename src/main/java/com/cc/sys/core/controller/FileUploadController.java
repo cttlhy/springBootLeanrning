@@ -10,6 +10,7 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,9 +29,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @RequestMapping(path = "cc/sys/core/controller/fileUploadController")
 public class FileUploadController {
 
+	@Value("${spring.upload.path}")
+	private String uploadPath;
+
 	@RequestMapping("/uploadFile")
 	public String file() {
-		System.out.println("--------");
 		return "cc/sys/core/uploadFile";
 	}
 
@@ -52,11 +55,20 @@ public class FileUploadController {
 				 * 3、文件格式; 4、文件大小的限制;
 				 */
 				long startTime = System.currentTimeMillis();
-				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("d:/igFile")));
+				
+				File uploadFile = new File(uploadPath);
+				if(!uploadFile.exists()){
+					uploadFile.mkdirs();
+				}
+				
+				String filePath = uploadPath + file.getOriginalFilename();
+				
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(filePath));
 				out.write(file.getBytes());
 				out.flush();
 				out.close();
 				long endTime = System.currentTimeMillis();
+				
 				System.out.println("二进制流上传耗时：" + (endTime - startTime));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -78,6 +90,11 @@ public class FileUploadController {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		// 判断是否有文件上传
 		if (resolver.isMultipart(request)) {
+			File f = new File(uploadPath);
+			if(!f.exists()){
+				f.mkdirs();
+			}
+			
 			MultipartHttpServletRequest multiReq = (MultipartHttpServletRequest) request;
 			Iterator<String> iter = multiReq.getFileNames();
 			while (iter.hasNext()) {
@@ -86,9 +103,8 @@ public class FileUploadController {
 				if (file != null) {
 					String myFileName = file.getOriginalFilename();
 					if (!myFileName.trim().equals("")) {
-						System.out.println(myFileName);
 						String newFileName = "upload" + myFileName;
-						String path = "d:/" + newFileName;
+						String path = uploadPath + newFileName;
 						File localFile = new File(path);
 						file.transferTo(localFile);
 						long endTime = System.currentTimeMillis();

@@ -63,5 +63,7 @@
 	关闭调度<a href="javascript:void(0)" onclick="stop_the_started_Task();" >关闭调度</a>
 	<br>
 	发送右键(发送目标在 properties文件中配置)<a href="javascript:void(0)" onclick="sendEmail();" >发送邮件</a>
+	<br>
+	文件上传案例<a href="cc/sys/core/controller/fileUploadController/uploadFile" >文件上传</a>
 </body>
 </html>
