@@ -30,7 +30,7 @@ public class MappingResourceConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(firstInterceptor);
-		logger.info("=================>加载自定义拦截器1【com.cc.sys.core.interceptor.FirstInterceptor】");
+		logger.info("加载自定义拦截器【com.cc.sys.core.interceptor.FirstInterceptor】");
 		super.addInterceptors(registry);
 	}
 
