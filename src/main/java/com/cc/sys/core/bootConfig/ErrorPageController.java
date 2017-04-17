@@ -1,4 +1,4 @@
-package com.cc.sys.core.bootConfig.globalCF;
+package com.cc.sys.core.bootConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
