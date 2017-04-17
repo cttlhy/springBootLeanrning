@@ -23,7 +23,15 @@
 	<h1>springMVC包装类上传文件</h1>
 	<form name="form2" method="post" encType="multipart/form-data" action="cc/sys/core/controller/fileUploadController/upload2">
 		<p>
-			浏览<input name="file" type="file" />
+			文件1<input name="file1" type="file" />
+			<br>
+			文件2<input name="file2" type="file" />
+			<br>
+			文件3<input name="file3" type="file" />
+			<br>
+			文件4<input name="file4" type="file" />
+			<br>
+			文件5<input name="file5" type="file" />
 		</p>
 		<p>
 			<input type="submit" value="上传">
