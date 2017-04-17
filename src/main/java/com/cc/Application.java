@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -74,7 +75,6 @@ public class Application extends SpringBootServletInitializer implements Transac
 
 	/**
 	 * 使用fastjson作为转换器
-	 * 
 	 * @return
 	 */
 	@Bean
@@ -88,6 +88,11 @@ public class Application extends SpringBootServletInitializer implements Transac
 		return new HttpMessageConverters(converter);
 	}
  
+	
+	@Value("${spring.upload.maxSize}")
+	private String maxSize;//单个文件上传最大尺寸限制
+	@Value("${spring.upload.totalSize}")
+	private String totalSize;//所有文件最大尺寸限制
 	/**
 	 * 文件上传大小限制
 	 * 
@@ -97,9 +102,9 @@ public class Application extends SpringBootServletInitializer implements Transac
 	public MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
 		//// 设置文件大小限制 ,超了，页面会抛出异常信息，这时候就需要进行异常信息的处理了;
-		factory.setMaxFileSize("128KB"); // KB,MB
+		factory.setMaxFileSize(maxSize); // KB,MB
 		/// 设置总上传数据总大小
-		factory.setMaxRequestSize("256KB");
+		factory.setMaxRequestSize(totalSize);
 		// Sets the directory location wherefiles will be stored.
 		// factory.setLocation("d:/imgFile");
 		return factory.createMultipartConfig();
