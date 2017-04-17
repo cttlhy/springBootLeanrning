@@ -49,7 +49,6 @@ public class CacheConfig extends CachingConfigurerSupport {
 					sb.append(obj.toString());
 				}
 				logger.info("==============KeyGenerator()加载成功..:"+sb.toString());
-				
 				return sb.toString();
 			}
 		};
