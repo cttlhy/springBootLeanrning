@@ -113,7 +113,7 @@ public class Application extends SpringBootServletInitializer implements Transac
 	 */
 	@Bean(name="threadPoolTaskScheduler")
 	public ThreadPoolTaskScheduler threadPoolTaskScheduler(){
-		return  new ThreadPoolTaskScheduler();
+		return new ThreadPoolTaskScheduler();
 	}
 
 	
