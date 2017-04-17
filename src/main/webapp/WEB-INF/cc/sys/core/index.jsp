@@ -34,6 +34,7 @@
 		window.open("${url }stop_the_started_Task");
 	}
 	function sendEmail(){
+		alert("${url }sendEmail");
 		window.open("${url }sendEmail");
 	}
 </script>
