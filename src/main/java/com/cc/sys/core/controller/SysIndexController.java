@@ -42,7 +42,7 @@ import com.github.pagehelper.PageInfo;
  * @author chenchao
  */
 @Controller
-@RequestMapping(path = "cc/sys/core/controller/sysIndexController")
+@RequestMapping(path = "cc/sys/core/controller/sysIndexController/")
 public class SysIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(SysIndexController.class);
 
@@ -65,6 +65,13 @@ public class SysIndexController {
 	public ModelAndView gotoIndexPage(HttpServletRequest request, HttpServletResponse reponse) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("cc/sys/core/index");
+		request.setAttribute("url", "cc/sys/core/controller/sysIndexController/operation/");
+		return mav;
+	}
+	@RequestMapping(path = "gotoEasyUiPage", method = RequestMethod.GET)
+	public ModelAndView gotoEasyUiPage(HttpServletRequest request, HttpServletResponse reponse) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("cc/sys/core/easyui_metro");
 		request.setAttribute("url", "cc/sys/core/controller/sysIndexController/operation/");
 		return mav;
 	}
