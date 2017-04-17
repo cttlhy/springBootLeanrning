@@ -50,7 +50,7 @@
 		var portals = $("div[name='portal_panel']").portal();
 		$.each(portals,function(index,item){
 			var p = $(item).panel({
-				height:200
+				height:400
 			});
 			portal.portal('add',{
 				panel:p,
@@ -113,8 +113,8 @@
 
 				<div title="首页" id="tab-index">
 					<div id="portal" style="border-style: none">
-						<div style="width: 33%"></div>
-						<div style="width: 67%"></div>
+						<div style="width: 50%"></div>
+						<div style="width: 50%"></div>
 					</div>
 
 					<div name="portal_panel" class="easyui-panel" title="门户小页A"></div>
