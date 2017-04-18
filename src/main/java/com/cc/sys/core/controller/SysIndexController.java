@@ -1,5 +1,6 @@
 package com.cc.sys.core.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,6 @@ import com.cc.sys.core.service.UserService;
 import com.cc.sys.core.util.PageParameter;
 import com.cc.sys.core.util.QueryReqBean;
 import com.cc.sys.core.util.QueryResponseBean;
-import com.github.pagehelper.PageInfo;
 
 /**
  * 目的：index.jsp页面所需要的跳转后台mapping映射 跳转系统首页
@@ -95,7 +95,7 @@ public class SysIndexController {
 
 	@RequestMapping(path = "operation/testPageHelper", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> testPageHelper(PageParameter pageParameter) {
+	public Map<String, Object> testPageHelper(PageParameter pageParameter,HttpServletResponse response,HttpServletRequest request) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		QueryReqBean<SysUser> queryBean = new QueryReqBean<SysUser>();
@@ -109,6 +109,12 @@ public class SysIndexController {
 		map.put("total", responseBean.getResult().getTotal());
 		map.put("rows", responseBean.getResult());
 
+		System.out.println("======>"+request.getContentType());
+		System.out.println("======>"+request.getCharacterEncoding());
+		System.out.println("======>"+response.getCharacterEncoding());
+		System.out.println("======>"+response.getContentType());
+		
+		
 		logger.debug("testPageHelper");
 		return map;
 	}
@@ -172,6 +178,12 @@ public class SysIndexController {
 				return cronTrigger.nextExecutionTime(triggerContext);
 			}
 		});
+		try {
+			return new String("启动任务成功！".getBytes("ISO-8859-1"),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "启动任务成功！";
 	}
 
@@ -203,6 +215,12 @@ public class SysIndexController {
 		}
 		javaMailSender.send(message);
 		return "send Success!";
+	}
+	
+	@RequestMapping("/operation/test")
+	@ResponseBody
+	public String test(){
+		return "我是你大爷，妈的。你乱码否？";
 	}
 
 }

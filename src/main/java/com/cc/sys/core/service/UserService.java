@@ -1,5 +1,6 @@
 package com.cc.sys.core.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,12 +38,12 @@ public class UserService {
 		return userDao.selectUserById(id);
 	}
 
-	@Cacheable(value = "listUsers",keyGenerator="wiselyKeyGenerator")
+	//@Cacheable(value = "listUsers",keyGenerator="wiselyKeyGenerator")
 	public List<SysUser> listUsers() {
 		List<SysUser> users = userDao.listUsers(new SysUser());
 		return users;
 	}
-	@Cacheable(value = "listUsers1",keyGenerator="wiselyKeyGenerator")
+	//@Cacheable(value = "listUsers1",keyGenerator="wiselyKeyGenerator")
 	public QueryResponseBean<SysUser> listUsers2(QueryReqBean<SysUser> reqBean) {
 		
 		PageParameter pageParameter = reqBean.getPageParameter();
@@ -72,17 +73,19 @@ public class UserService {
 	public int insert() throws Exception {
 		try {
 			int res = 0;
-			for (int i = 0; i < 1000; i++) {
+			for (int i = 0; i < 50; i++) {
 				SysUser user = new SysUser();
 				user.setId(UUID.randomUUID().toString());
 				user.setName("admin"+i);
+				user.setLoginName(user.getName()+"_");
 				user.setAddress("陕西");
-				user.setEmail("123@112.com");
+				user.setCreateBy("陈超");
+				user.setBirthday(new Date());
+				user.setLoginPassword("admin123");
+				user.setSex("M");
+				user.setEmail(user.getLoginName()+"chen@chenchao.com");
 				userDao.insertSysUser(user);
 				logger.info("插入数据第["+(i+1)+"]条");
-				if(i>100){
-					//throw new DaoException("插入数据过多，回滚！");
-				}
 				res++;
 			}
 			return res;

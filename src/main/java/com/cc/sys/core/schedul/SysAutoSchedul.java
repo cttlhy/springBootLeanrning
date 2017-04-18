@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;

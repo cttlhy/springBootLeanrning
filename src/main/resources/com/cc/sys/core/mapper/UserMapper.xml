@@ -24,14 +24,41 @@
 		delete from sys_user where id =#{id}
 	</delete>
 
+
+
 	<insert id="insertSysUser" parameterType="com.cc.sys.core.dto.SysUser">
 		insert into sys_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			
 			<if test="id != null">
 				id,
 			</if>
-			<if test="name != null">
-				name,
+			<if test="lockedType != null">
+				locked_type,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="lastUpdateBy != null">
+				last_update_by,
+			</if>
+			<if test="lastUpdateIp != null">
+				last_update_ip,
+			</if>
+			<if test="lastUpdateTime != null">
+				last_update_time,
 			</if>
 			<if test="loginName != null">
 				login_name,
@@ -39,47 +66,23 @@
 			<if test="loginPassword != null">
 				login_password,
 			</if>
+			<if test="name != null">
+				name,
+			</if>
 			<if test="no != null">
 				no,
-			</if>
-			<if test="secretLevel != null">
-				secret_level,
-			</if>
-			<if test="birthday != null">
-				birthday,
-			</if>
-			<if test="sex != null">
-				sex,
-			</if>
-			<if test="address != null">
-				address,
 			</if>
 			<if test="phoneNo != null">
 				phone_no,
 			</if>
-			<if test="email != null">
-				email,
-			</if>
-			<if test="lockedType != null">
-				locked_type,
-			</if>
 			<if test="remark != null">
 				remark,
 			</if>
-			<if test="createTime != null">
-				create_time,
+			<if test="secretLevel != null">
+				secret_level,
 			</if>
-			<if test="lastUpdateTime != null">
-				last_update_time,
-			</if>
-			<if test="createBy != null">
-				create_by,
-			</if>
-			<if test="lastUpdateIp != null">
-				last_update_ip,
-			</if>
-			<if test="lastUpdateBy != null">
-				last_update_by,
+			<if test="sex != null">
+				sex,
 			</if>
 			<if test="version != null">
 				version,
@@ -89,8 +92,32 @@
 			<if test="id != null">
 				#{id,jdbcType=VARCHAR},
 			</if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
+			<if test="lockedType != null">
+				#{lockedType,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateBy != null">
+				#{lastUpdateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateIp != null">
+				#{lastUpdateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="loginName != null">
 				#{loginName,jdbcType=VARCHAR},
@@ -98,51 +125,28 @@
 			<if test="loginPassword != null">
 				#{loginPassword,jdbcType=VARCHAR},
 			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
 			<if test="no != null">
 				#{no,jdbcType=VARCHAR},
-			</if>
-			<if test="secretLevel != null">
-				#{secretLevel,jdbcType=VARCHAR},
-			</if>
-			<if test="birthday != null">
-				#{birthday,jdbcType=DATE},
-			</if>
-			<if test="sex != null">
-				#{sex,jdbcType=VARCHAR},
-			</if>
-			<if test="address != null">
-				#{address,jdbcType=VARCHAR},
 			</if>
 			<if test="phoneNo != null">
 				#{phoneNo,jdbcType=VARCHAR},
 			</if>
-			<if test="email != null">
-				#{email,jdbcType=VARCHAR},
-			</if>
-			<if test="LockedType != null">
-				#{LockedType,jdbcType=VARCHAR},
-			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
 			</if>
-			<if test="createTime != null">
-				#{createTime,jdbcType=TIMESTAMP},
+			<if test="secretLevel != null">
+				#{secretLevel,jdbcType=VARCHAR},
 			</if>
-			<if test="lastUpdateTime != null">
-				#{lastUpdateTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				#{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="lastUpdateIp != null">
-				#{lastUpdateIp,jdbcType=VARCHAR},
-			</if>
-			<if test="lastUpdateBy != null">
-				#{lastUpdateBy,jdbcType=VARCHAR},
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
 			</if>
 			<if test="version != null">
-				#{version,jdbcType=INTEGER},
+				#{version,jdbcType=BIGINT},
 			</if>
 		</trim>
 	</insert>
+
 </mapper>

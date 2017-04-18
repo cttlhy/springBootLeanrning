@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,11 @@ public class ResourceFilter implements Filter {
 			throws IOException, ServletException {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
-		String path = req.getRequestURL().toString();
-		logger.info("被过滤器检测到的请求地址:-->"+path);
-		chain.doFilter(request, response);
+		HttpServletResponse rsp = (HttpServletResponse)response;
+		req.setCharacterEncoding("utf-8");
+		rsp.setCharacterEncoding("utf-8");
+		rsp.setHeader("content-type","text/html;charset=utf-8");
+		chain.doFilter(req, rsp);
 	}
 
 	@Override
