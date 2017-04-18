@@ -8,7 +8,7 @@ import com.github.pagehelper.Page;
 public interface UserDao{
 	public SysUser selectUserById(String id);
 	
-	public Page<SysUser> listUsers();
+	public Page<SysUser> listUsers(SysUser searchParams);
 	
 	public int deleteById(int id);
 	
