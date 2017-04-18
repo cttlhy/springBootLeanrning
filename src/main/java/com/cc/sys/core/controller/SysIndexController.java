@@ -1,14 +1,13 @@
 package com.cc.sys.core.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 
 import javax.annotation.Resource;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +33,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cc.sys.core.counst.SchedulConfig;
 import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.service.UserService;
+import com.cc.sys.core.util.PageParameter;
+import com.cc.sys.core.util.QueryReqBean;
+import com.cc.sys.core.util.QueryResponseBean;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -48,18 +50,17 @@ public class SysIndexController {
 
 	@Resource
 	private UserService userService;
-	
+
 	@Resource
 	private ThreadPoolTaskScheduler threadPoolTaskScheduler;
-	
-	private ScheduledFuture<?> schedule;//启动调度后的任务对象
-	
+
+	private ScheduledFuture<?> schedule;// 启动调度后的任务对象
+
 	@Autowired
-    private JavaMailSender javaMailSender;
-	
+	private JavaMailSender javaMailSender;
+
 	@Value("${spring.mail.username}")
 	private String emailFormUser;
-	
 
 	@RequestMapping(path = "index", method = RequestMethod.GET)
 	public ModelAndView gotoIndexPage(HttpServletRequest request, HttpServletResponse reponse) {
@@ -68,6 +69,7 @@ public class SysIndexController {
 		request.setAttribute("url", "cc/sys/core/controller/sysIndexController/operation/");
 		return mav;
 	}
+
 	@RequestMapping(path = "gotoEasyUiPage", method = RequestMethod.GET)
 	public ModelAndView gotoEasyUiPage(HttpServletRequest request, HttpServletResponse reponse) {
 		ModelAndView mav = new ModelAndView();
@@ -93,15 +95,28 @@ public class SysIndexController {
 
 	@RequestMapping(path = "operation/testPageHelper", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<SysUser> testPageHelper(HttpServletRequest request, HttpServletResponse reponse) {
+	public Map<String, Object> testPageHelper(PageParameter pageParameter) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		QueryReqBean<SysUser> queryBean = new QueryReqBean<SysUser>();
+		queryBean.setPageParameter(pageParameter);
+
+		SysUser queryParam = new SysUser();
+		queryBean.setSearchParams(queryParam);
+
+		QueryResponseBean<SysUser> responseBean = userService.listUsers2(queryBean);
+
+		map.put("total", responseBean.getResult().getTotal());
+		map.put("rows", responseBean.getResult());
+
 		logger.debug("testPageHelper");
-		PageInfo<SysUser> users = userService.listUsers2();
-		return users;
+		return map;
 	}
 
 	@RequestMapping(path = "operation/testNoPageHelper", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SysUser> testNoPageHelper(HttpServletRequest request, HttpServletResponse reponse) {
+
 		logger.debug("testPageHelper");
 		List<SysUser> users = userService.listUsers();
 		return users;
@@ -139,17 +154,18 @@ public class SysIndexController {
 		SchedulConfig.setExecutionTime(excutionTime);
 		return "更改成功.";
 	}
+
 	@RequestMapping(path = "operation/start_A_Task", method = RequestMethod.GET)
 	@ResponseBody
-	public String start_A_Task(){
+	public String start_A_Task() {
 		System.out.println(threadPoolTaskScheduler.getPoolSize());
 		schedule = threadPoolTaskScheduler.schedule(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("start_A_Task,启动成功：-->"+ new Date());
+				System.out.println("start_A_Task,启动成功：-->" + new Date());
 			}
 		}, new Trigger() {
-			
+
 			@Override
 			public Date nextExecutionTime(TriggerContext triggerContext) {
 				CronTrigger cronTrigger = new CronTrigger(SchedulConfig.getExecutionTime());
@@ -158,22 +174,22 @@ public class SysIndexController {
 		});
 		return "启动任务成功！";
 	}
+
 	@RequestMapping(path = "operation/stop_the_started_Task", method = RequestMethod.GET)
 	@ResponseBody
-	public String stop_the_started_Task(){
-		if(schedule!=null){//如果存在调度执行，再关闭
+	public String stop_the_started_Task() {
+		if (schedule != null) {// 如果存在调度执行，再关闭
 			schedule.cancel(true);
 		}
 		return "任务关闭";
 	}
-	
-	
-	
+
 	@Value("${spring.mail.sendTo}")
 	private String sendTo;
+
 	@RequestMapping(path = "operation/sendEmail", method = RequestMethod.GET)
 	@ResponseBody
-	public String sendEmail(){
+	public String sendEmail() {
 		MimeMessage message = null;
 		try {
 			message = javaMailSender.createMimeMessage();
@@ -181,14 +197,12 @@ public class SysIndexController {
 			helper.setFrom(emailFormUser);
 			helper.setTo(sendTo);
 			message.setSubject("标题：来子springboot1.52的测试发送");
-			helper.setText("<a href='http://www.baidu.com'>百度链接</a>",true);
+			helper.setText("<a href='http://www.baidu.com'>百度链接</a>", true);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-        javaMailSender.send(message);
+		javaMailSender.send(message);
 		return "send Success!";
 	}
-	
-	
 
 }
