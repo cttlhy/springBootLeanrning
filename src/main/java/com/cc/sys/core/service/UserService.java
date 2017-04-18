@@ -16,9 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cc.sys.core.dao.UserDao;
 import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.exception.DaoException;
+import com.cc.sys.core.util.PageParameter;
+import com.cc.sys.core.util.QueryReqBean;
+import com.cc.sys.core.util.QueryResponseBean;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 @Service
 @Transactional
@@ -37,21 +39,20 @@ public class UserService {
 
 	@Cacheable(value = "listUsers",keyGenerator="wiselyKeyGenerator")
 	public List<SysUser> listUsers() {
-		//Page<SysUser> users = PageHelper.startPage(1, 3);
-		//users.addAll(userDao.listUsers());
-		List<SysUser> users = userDao.listUsers();
-		System.out.println("1111=============>查询数据库获取列表成功！");
-		
+		List<SysUser> users = userDao.listUsers(new SysUser());
 		return users;
 	}
 	@Cacheable(value = "listUsers1",keyGenerator="wiselyKeyGenerator")
-	public PageInfo<SysUser> listUsers2() {
-		PageHelper.startPage(10, 10);
-		Page<SysUser> listUsers = userDao.listUsers();
-		System.out.println(listUsers.size());
-		PageInfo<SysUser> pinfo = new PageInfo<SysUser>(listUsers);
-		System.out.println("22222=============>查询数据库获取列表成功！");
-		return pinfo;
+	public QueryResponseBean<SysUser> listUsers2(QueryReqBean<SysUser> reqBean) {
+		
+		PageParameter pageParameter = reqBean.getPageParameter();
+		SysUser searchParams = reqBean.getSearchParams();
+		PageHelper.startPage(pageParameter.getPage(), pageParameter.getRows());
+		Page<SysUser> listUsers = userDao.listUsers(searchParams);
+		QueryResponseBean<SysUser> queryRespBean =new QueryResponseBean<SysUser>();
+		queryRespBean.setResult(listUsers);
+		logger.info("listUsers2获取结果集请求数据库成功并返回【"+listUsers.getResult().size()+"】条记录");
+		return queryRespBean;
 	}
 
 	public int deleteById(int id) throws Exception {
@@ -93,7 +94,6 @@ public class UserService {
 	
 	@CacheEvict(allEntries=true,value="*",key="*")
 	public String removeAllCache(){
-//		redis.delete("*");
 		return "删除完毕。";
 	}
 
