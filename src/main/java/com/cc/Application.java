@@ -81,7 +81,7 @@ public class Application extends SpringBootServletInitializer implements Transac
 	public HttpMessageConverters fastJsonHttpMessageConverters() {
 		FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 		FastJsonConfig fastJsonConfig = new FastJsonConfig();
-		fastJsonConfig.setCharset(Charset.forName("GBK"));
+		fastJsonConfig.setCharset(Charset.forName("utf-8"));
 		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,SerializerFeature.WriteMapNullValue);
 		fastConverter.setFastJsonConfig(fastJsonConfig);
 		HttpMessageConverter<?> converter = fastConverter;
