@@ -50,7 +50,8 @@
 		var portals = $("div[name='portal_panel']").portal();
 		$.each(portals,function(index,item){
 			var p = $(item).panel({
-				height:400
+				height:400,
+				content:'<iframe src="datagrid.jsp" style="width:98%;height:98%;border:none" ></iframe>'
 			});
 			portal.portal('add',{
 				panel:p,
