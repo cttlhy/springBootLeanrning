@@ -85,7 +85,7 @@ var Index = {
 					formData : JSON.stringify(form)
 				},
 				success : function(res) {
-					if(res=="success"){
+					if(res.flag=="success"){
 						$.messager.show({
 							title:"提示",
 							msg:'注册成功！'
