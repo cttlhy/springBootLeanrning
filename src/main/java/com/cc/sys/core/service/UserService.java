@@ -9,12 +9,10 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cc.sys.core.counst.CommonFlag;
 import com.cc.sys.core.counst.PlatformConstant.ActionType;
 import com.cc.sys.core.dao.UserDao;
 import com.cc.sys.core.dto.SysUser;
