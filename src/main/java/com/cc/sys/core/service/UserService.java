@@ -111,19 +111,5 @@ public class UserService {
 	public String removeAllCache(){
 		return "删除完毕。";
 	}
-	
-	
-	public SysUser copyProperties(SysUser user){
-		user.setCreateBy("陈超");
-		user.setCreateTime(new Date());
-		user.setLastUpdateBy("陈超");
-		user.setLastUpdateIp("192.168.1.88");
-		user.setLastUpdateTime(new Date());
-		user.setLockedType("unlock");
-		user.setNo(user.getId());
-		user.setVersion(0L);
-		return user;
-	}
-	
 
 }
