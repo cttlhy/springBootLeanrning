@@ -1,7 +1,7 @@
 var Index = {
 	urlConfig : {
 		loginCommitUrl : "",//登录提交地址
-		registUrl:""//注册提交地址
+		registUrl:"cc/sys/core/controller/sysIndexController/operation/regist"//注册提交地址
 	},
 	element : {
 		loginEl : undefined,//登录窗的对象
@@ -22,7 +22,7 @@ var Index = {
 					title : '用户登录',
 					minimizable : false,
 					maximizable : false,
-					draggable : false,
+					draggable : true,
 					resizable : false,
 					constrain : true
 				});
@@ -63,7 +63,7 @@ var Index = {
 					title : '注册',
 					minimizable : false,
 					maximizable : false,
-					draggable : false,
+					draggable : true,
 					resizable : false,
 					constrain : true
 				});
@@ -76,6 +76,7 @@ var Index = {
 			Index.element.registEl.window("close");
 		},
 		regist : function(form) {
+			alert(Index.urlConfig.registUrl);
 			$.ajax({
 				url : Index.urlConfig.registUrl,
 				type : 'post',
@@ -84,7 +85,18 @@ var Index = {
 					formData : JSON.stringify(form)
 				},
 				success : function(res) {
-					alert("注册成功！");
+					if(res=="success"){
+						$.messager.show({
+							title:"提示",
+							msg:'注册成功！'
+						});
+						Index.regist.close();
+					}else{
+						$.messager.show({
+							title:"提示",
+							msg:'注册失败,请联系管理员解决！'
+						});
+					}
 				}
 			})
 		}

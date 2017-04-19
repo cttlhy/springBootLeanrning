@@ -38,6 +38,9 @@ public class ResourceFilter implements Filter {
 		HttpServletResponse rsp = (HttpServletResponse)response;
 		req.setCharacterEncoding("utf-8");
 		rsp.setCharacterEncoding("utf-8");
+		
+		logger.info(req.getRequestURI());
+		
 		rsp.setHeader("content-type","text/html;charset=utf-8");
 		chain.doFilter(req, rsp);
 	}

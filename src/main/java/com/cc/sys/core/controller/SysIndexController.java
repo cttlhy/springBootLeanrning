@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.cc.sys.core.counst.PlatformConstant.ActionResult;
 import com.cc.sys.core.counst.SchedulConfig;
 import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.service.UserService;
@@ -109,12 +111,6 @@ public class SysIndexController {
 		map.put("total", responseBean.getResult().getTotal());
 		map.put("rows", responseBean.getResult());
 
-		System.out.println("======>"+request.getContentType());
-		System.out.println("======>"+request.getCharacterEncoding());
-		System.out.println("======>"+response.getCharacterEncoding());
-		System.out.println("======>"+response.getContentType());
-		
-		
 		logger.debug("testPageHelper");
 		return map;
 	}
@@ -217,10 +213,18 @@ public class SysIndexController {
 		return "send Success!";
 	}
 	
-	@RequestMapping("/operation/test")
+	@RequestMapping(path="/operation/regist",method=RequestMethod.POST)
 	@ResponseBody
-	public String test(){
-		return "我是你大爷，妈的。你乱码否？";
+	public ModelAndView regist(HttpServletRequest request,HttpServletResponse response){
+		ModelAndView mav = new ModelAndView();
+		String registObject = request.getParameter("formData");
+		SysUser SysUser = JSON.parseObject(registObject, SysUser.class);
+		if(userService.insertObject(SysUser)>0){
+			mav.addObject("flag", ActionResult.success);
+		}else{
+			mav.addObject("flag", ActionResult.failure);
+		}
+		return  mav;
 	}
 
 }

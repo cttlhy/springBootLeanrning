@@ -37,32 +37,33 @@
 #registPanel tr{
 	height: 40px
 }
-#registPanel td{
+/* #registPanel td{
 	text-align: right;
-}
-
+} */
 </style>
 
 <script type="text/javascript">
 	$(function() {
-		var portal = $("#portal").portal({
-			border:true
-		});
+		var portal = $("#portal").portal();
 		var portals = $("div[name='portal_panel']").portal();
 		$.each(portals,function(index,item){
 			var p = $(item).panel({
-				height:400,
-				content:'<iframe src="datagrid.jsp" style="width:98%;height:98%;border:none" ></iframe>'
+				height:400//,
+				//content:'<iframe src="datagrid.jsp" style="width:98%;height:98%;border:none" ></iframe>'
 			});
 			portal.portal('add',{
 				panel:p,
 				columnIndex:index
-			}).portal('disableDragging',p);
+			});
 		});
 		
 		/**树加载*/
 		$("#tree").tree({
-			url:'data.json'
+		});
+		
+		$("#birthday").datebox({
+			width:'173',
+			editable:false
 		});
 		
 		Index.login.init("#loginPanel");
@@ -74,7 +75,7 @@
 	}
 	//注册
 	function regist(){
-		Index.regist.regist(SerializeObject($("#registPanel")));
+		Index.regist.regist(SerializeObject($("#registForm")));
 	}
 	
 	//已有帐号登录
@@ -119,8 +120,10 @@
 						<div style="width: 50%"></div>
 					</div>
 
-					<div name="portal_panel" class="easyui-panel" title="门户小页A"></div>
-					<div name="portal_panel" class="easyui-panel" title="门户小页B"></div>
+					<div name="portal_panel" class="easyui-panel" title="门户小页A">
+					</div>
+					<div name="portal_panel" class="easyui-panel" title="门户小页B">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -153,21 +156,59 @@
 		</div>
 		
 		<div id="registPanel" style="display: none">
-			<form id="loginForm" class="easyui-form">
+			<form id="registForm" class="easyui-form">
 				<table style="margin: 0 auto;border: thin;" >
 					<tr>
+						<td>姓名:</td>
+						<td><input class="easyui-validatebox" type="text" name="name" ></td>
+						<td></td>
+					</tr>
+					<tr>
 						<td>帐号:</td>
-						<td><input type="text" name="name"></td>
+						<td><input class="easyui-validatebox"  type="text" name="loginName"></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>密码:</td>
-						<td><input type="password" name="password"></td>
+						<td><input class="easyui-validatebox"  type="password" name="loginPassword"></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td>重复密码:</td>
-						<td><input type="password" name="rePassword"></td>
+						<td><input class="easyui-validatebox"  type="password" name="rePassword"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>涉密等级:</td>
+						<td><input class="easyui-validatebox"  type="text" name="secretLevel"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>出生日期:</td>
+						<td><input name="birthday" class="easyui-datebox" id="birthday" /></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>E-mail:</td>
+						<td><input class="easyui-validatebox"  type="text" name="email" ></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>电话号码:</td>
+						<td><input class="easyui-validatebox"  type="text" name="phoneNo" ></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>地址:</td>
+						<td><input class="easyui-validatebox"  type="text" name="address"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>性别:</td>
+						<td style="text-align: left;" >
+							<input type="radio" name="sex" checked="checked" value="M" >男
+							<input type="radio" name="sex" value="F" >女
+						</td>
 						<td></td>
 					</tr>
 					<tr>
