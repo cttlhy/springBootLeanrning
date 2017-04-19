@@ -21,6 +21,7 @@
 
 <!-- 工具JS -->
 <script type="text/javascript" src="js_third/SerializeObject.js"></script>
+<script type="text/javascript" src="js_third/CommonDialog.js"></script>
 <!-- 自定义JS -->
 
 <script type="text/javascript" src="js/index.js"></script>
@@ -43,6 +44,7 @@
 </style>
 
 <script type="text/javascript">
+	var com;
 	$(function() {
 		var portal = $("#portal").portal();
 		var portals = $("div[name='portal_panel']").portal();
@@ -68,6 +70,9 @@
 		
 		Index.login.init("#loginPanel");
 		Index.regist.init("#registPanel");
+		
+		comm = new CommonDialog("insert","790","500","","添加",false,true,false);
+		
 	})
 	//登录
 	function login(){
@@ -88,7 +93,6 @@
 	function forgetPassword(){
 		Index.forget();
 	}
-	
 </script>
 
 </head>
@@ -109,7 +113,8 @@
 		</div>
 
 		<div data-options="region:'west',width:300,">
-			<ul id="tree"></ul>
+			<!-- <ul id="tree"></ul> -->
+			<button onclick="comm.show();" >显示</button>
 		</div>
 		<div data-options="region:'center',border:false" style="padding: 3px">
 			<div id="tt" class="easyui-tabs" fit="true" data-options="border:false">
