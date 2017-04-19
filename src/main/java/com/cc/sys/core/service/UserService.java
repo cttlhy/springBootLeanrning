@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cc.sys.core.counst.CommonFlag;
+import com.cc.sys.core.counst.PlatformConstant.ActionType;
 import com.cc.sys.core.dao.UserDao;
 import com.cc.sys.core.dto.SysUser;
 import com.cc.sys.core.exception.DaoException;
+import com.cc.sys.core.util.CopyProperties;
 import com.cc.sys.core.util.PageParameter;
 import com.cc.sys.core.util.QueryReqBean;
 import com.cc.sys.core.util.QueryResponseBean;
@@ -98,7 +100,7 @@ public class UserService {
 	public int insertObject(SysUser user){
 		if(user!=null&&(user.getId()==null||user.getId().isEmpty())){
 			user.setId(UUID.randomUUID().toString());
-			copyProperties(user);
+			CopyProperties.setSysProperties(user, ActionType.insert);
 			return userDao.insertSysUser(user);
 		}
 		return -1;
