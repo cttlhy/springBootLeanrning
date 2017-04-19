@@ -45,7 +45,9 @@
 
 <script type="text/javascript">
 	$(function() {
-		var portal = $("#portal").portal();
+		var portal = $("#portal").portal({
+			border:true
+		});
 		var portals = $("div[name='portal_panel']").portal();
 		$.each(portals,function(index,item){
 			var p = $(item).panel({
@@ -55,7 +57,7 @@
 			portal.portal('add',{
 				panel:p,
 				columnIndex:index
-			});
+			}).portal('disableDragging',p);
 		});
 		
 		/**树加载*/
