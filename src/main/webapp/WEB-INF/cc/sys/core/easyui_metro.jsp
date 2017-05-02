@@ -71,7 +71,7 @@
 		Index.login.init("#loginPanel");
 		Index.regist.init("#registPanel");
 		
-		comm = new CommonDialog("insert","790","500","","添加",false,true,false);
+		comm = new CommonDialog("insert","790","500","upload.jsp","添加",false,true,false);
 		
 	})
 	//登录
