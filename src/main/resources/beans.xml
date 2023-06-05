@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean id = "aService" class = "com.mini.test.AServiceImpl">
+<!--        <property type = "String" name = "property1" ref = "hello world"></property>-->
+        <constructor-arg type="String" name="name" value="abc" />
+        <constructor-arg type="int" name="age" value="123" />
+    </bean>
+</beans> 
