@@ -79,6 +79,9 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry implements B
     public void registerBeanDefinition(BeanDefinition beanDefinition) {
         registerSingleton(); }
 
+    private void registerSingleton() {
+    }
+
     @Override
     public boolean containsBean(String name) {
         return containsSingleton(name);
