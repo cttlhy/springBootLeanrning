@@ -1,15 +1,15 @@
 package com.mini.observer;
 
 public class TemperatureDisplay implements Observer{
-    public float temporature;
+    public float temperature;
 
     @Override
     public void update(float value) {
-        this.temporature = value;
+        this.temperature = value;
         display();
     }
 
     private void display() {
-        System.out.println("当前温度："+temporature);
+        System.out.println("当前温度："+ temperature);
     }
 }
