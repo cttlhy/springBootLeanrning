@@ -1,4 +1,4 @@
-package com.mini.state.demo;
+package com.mini.state;
 
 // AbstractState.java
 public abstract class AbstractState implements IState {

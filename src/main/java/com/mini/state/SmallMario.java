@@ -1,15 +1,16 @@
-package com.mini.state.demo;
+package com.mini.state;
 
-public class SuperMario implements IState {
+public class SmallMario extends AbstractState {
     MarioStateMachine marioStateMachine;
 
-    public SuperMario(MarioStateMachine marioStateMachine) {
+    public SmallMario(MarioStateMachine marioStateMachine) {
         this.marioStateMachine = marioStateMachine;
     }
 
     @Override
     public void obtainMushRoom() {
-
+        marioStateMachine.setScore(marioStateMachine.getScore()+100);
+        marioStateMachine.setCurrentState(new SuperMario(marioStateMachine));
     }
 
     @Override
@@ -24,9 +25,4 @@ public class SuperMario implements IState {
         marioStateMachine.setCurrentState(new FireMario(marioStateMachine));
     }
 
-    @Override
-    public void meetMonster() {
-        marioStateMachine.setScore(marioStateMachine.getScore()-100);
-        marioStateMachine.setCurrentState(new SmallMario(marioStateMachine));
-    }
 }

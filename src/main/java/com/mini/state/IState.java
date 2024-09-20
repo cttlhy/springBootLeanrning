@@ -1,8 +1,11 @@
 package com.mini.state;
 
 public interface IState {
-    void insertCoin();
-    void ejectCoin();
-    void pressButton();
-    void dispense();
+    void obtainMushRoom() ;
+
+    void obtaincape() ;
+
+    void obtainFire() ;
+
+    void meetMonster() ;
 }

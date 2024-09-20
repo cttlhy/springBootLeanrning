@@ -1,4 +1,4 @@
-package com.mini.state.demo;
+package com.mini.state;
 
 public enum State {
     SMALL(0),
