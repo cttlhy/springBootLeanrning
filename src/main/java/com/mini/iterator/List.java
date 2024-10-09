@@ -5,6 +5,8 @@ public interface List<E> {
 
     void add(E i);
 
+    void remove(E i);
+
     int size();
 
     E get(int cursor);

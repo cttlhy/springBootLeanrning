@@ -3,7 +3,7 @@ package com.mini.iterator;
 public class ArrayList<E> implements List<E> {
 
     private int cursor;
-    private java.util.ArrayList<E> arrayList;
+    private java.util.ArrayList<E> arrayList = new java.util.ArrayList<>();
 
     @Override
     public Iterator iterator() {
@@ -16,6 +16,11 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
+    public void remove(E i) {
+        arrayList.remove(i);
+    }
+
+    @Override
     public int size() {
         return arrayList.size();
     }
@@ -24,5 +29,7 @@ public class ArrayList<E> implements List<E> {
     public E get(int cursor) {
         return arrayList.get(cursor);
     }
+
+
 
 }

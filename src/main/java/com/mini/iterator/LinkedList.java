@@ -16,6 +16,11 @@ public class LinkedList<E> implements List<E> {
     }
 
     @Override
+    public void remove(E i) {
+        linkedList.remove();
+    }
+
+    @Override
     public int size() {
         return linkedList.size();
     }
